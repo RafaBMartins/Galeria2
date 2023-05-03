@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="?attr/colorPrimary"
+    tools:context=".PhotoActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tbMain"
+        android:id="@+id/tbPhoto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -17,13 +20,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvGallery"
+    <ImageView
+        android:id="@+id/imvPhoto"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="?attr/colorPrimary"
+        android:background="@drawable/image_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tbMain" />
+        app:layout_constraintTop_toBottomOf="@+id/tbPhoto"
+        tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>
