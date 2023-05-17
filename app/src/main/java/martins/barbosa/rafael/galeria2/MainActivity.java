@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.Manifest;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
         int numberOfColumns = Utils.calculateNoOfColumns(MainActivity.this, w);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(MainActivity.this, numberOfColumns);
         rvGallery.setLayoutManager(gridLayoutManager);
+
+        List<String> permissions = new ArrayList<>();
+        permissions.add(Manifest.permission.CAMERA);
+
+        checkForPermissions(permissions);
     }
 
     //criando e inflando as opções do menu e adicionando ao menu de MainActivity
@@ -189,4 +195,3 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-}
