@@ -1,4 +1,4 @@
-package martins.barbosa.rafael.galeria2;
+package martins.barbosa.rafael.galeria2.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;

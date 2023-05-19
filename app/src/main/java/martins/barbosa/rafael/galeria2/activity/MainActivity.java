@@ -1,12 +1,12 @@
-package martins.barbosa.rafael.galeria2;
+package martins.barbosa.rafael.galeria2.activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AlertDialogLayout;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,11 +33,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import martins.barbosa.rafael.galeria2.adapter.MainAdapter;
+import martins.barbosa.rafael.galeria2.R;
+import martins.barbosa.rafael.galeria2.adapter.MainViewHolder;
+import martins.barbosa.rafael.galeria2.model.MainActivityViewModel;
+import martins.barbosa.rafael.galeria2.util.Utils;
+
 public class MainActivity extends AppCompatActivity {
 
     static int RESULT_TAKE_PICTURE = 1;
     static int RESULT_REQUEST_PERMISSION = 2;
-    List<String> photos = new ArrayList<>();
     MainAdapter mainAdapter;
     String currentPhotoPath;
 
@@ -49,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         //definindo a toolbar da activity como a que eu criei
         Toolbar toolbar = findViewById(R.id.tbMain);
         setSupportActionBar(toolbar);
+
+        MainActivityViewModel vm = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        List<String> photos = vm.getPhotos();
 
         File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File[] files = dir.listFiles();
@@ -110,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         currentPhotoPath = f.getAbsolutePath();
 
         if(f != null) {
-            Uri fUri = FileProvider.getUriForFile(MainActivity.this, "barbosa.martins.rafael.galeria.fileprovider", f);
+            Uri fUri = FileProvider.getUriForFile(MainActivity.this, "martins.barbosa.rafael.galeria2.fileprovider", f);
             Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             i.putExtra(MediaStore.EXTRA_OUTPUT, fUri);
             startActivityForResult(i, RESULT_TAKE_PICTURE);
@@ -130,6 +138,9 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == RESULT_TAKE_PICTURE) {
             if(resultCode == Activity.RESULT_OK) {
+                MainActivityViewModel vm = new ViewModelProvider(this).get(MainActivityViewModel.class);
+                List<String> photos = vm.getPhotos();
+
                 photos.add(currentPhotoPath);
 
                 mainAdapter.notifyItemInserted(photos.size()-1);
